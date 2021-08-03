@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from './MyArea.module.scss';
 import { IMyAreaProps } from './IMyAreaProps';
-import {readAllLists, arrayUnique, getMyLocsDpd} from  '../Services/DataRequests';
+import {readAllLists, arrayUnique, getMyAreaLocsDpd} from  '../Services/DataRequests';
 import IListItems from '../components/IListItems/IListItems';
 import IFilterFields from '../components/IFilterFields/IFilterFields';
 
@@ -20,22 +20,22 @@ export default function MyArea (props: IMyAreaProps){
   });
 
   React.useEffect(()=>{
-    getMyLocsDpd(props.context).then(r=>{
-      setFormLocationNos(r.sort((a, b) => a.text.localeCompare(b.text)));
-    });
-    readAllLists(props.context, props.listUrl, props.listName, props.pageSize).then((r: any) =>{
-      const listItemsForms  : any = [];
-      r.map(i=>{
-        if(i.length > 0){
-          listItemsForms.push({
-            key: i[0].title,
-            text: i[0].title
-          });
-        }
+    getMyAreaLocsDpd(props.context, props.superEmail).then(r=>{
+      setFormLocationNos(r[0].sort((a, b) => a.text.localeCompare(b.text)));
+      readAllLists(props.context, props.listUrl, props.listName, props.pageSize, r[1]).then((res: any) =>{
+        const listItemsForms  : any = [];
+        r.map(i=>{
+          if(i.length > 0){
+            listItemsForms.push({
+              key: i[0].title,
+              text: i[0].title
+            });
+          }
+        });
+        setFormTitles(arrayUnique(listItemsForms, 'key').sort((a, b) => a.key.localeCompare(b.key)));
+        setListItems(res.flat());
+        setPreloaderVisible(false);
       });
-      setFormTitles(arrayUnique(listItemsForms, 'key').sort((a, b) => a.key.localeCompare(b.key)));
-      setListItems(r.flat());
-      setPreloaderVisible(false);
     });
   }, []);
 

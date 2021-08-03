@@ -57,43 +57,22 @@ const getImgStatus = (formStatus: string) =>{
   return [imgStatusName, imgStatusText];
 };
 
-const getMyLocationsInfo = async (context: WebPartContext, locNum: string) =>{
-  const   restUrl = `/sites/contentTypeHub/_api/web/Lists/GetByTitle('schools')/items?$select=Title,School_x0020_My_x0020_School_x00,School_x0020_Name&$filter=Title eq '${locNum}'`,
-          _data = await context.spHttpClient.get(restUrl, SPHttpClient.configurations.v1);
-  let locInfo : {} = {};
-  
-  if(_data.ok){
-      const result = await _data.json();
-      locInfo = {key: result.value[0].Title, text: `${result.value[0].School_x0020_Name} (${result.value[0].Title})` };
-  }
-  return locInfo;
-};
-const getMyLocations = async (context: WebPartContext) =>{
-  const   currUserEmail = context.pageContext.user.email,
-          restUrl = `/sites/contentTypeHub/_api/web/Lists/GetByTitle('Employees')/items?$filter=MMHubBoardEmail eq '${currUserEmail}'&$select=MMHubLocationNos`;
+export const getMyAreaLocsDpd = async (context: WebPartContext, superEmail: string) =>{
+  // const currUserEmail = context.pageContext.user.email;
+  //const currUserEmail = 'nina.jaiswal@peelsb.com'; //for testing purposes
+  const currUserEmail = superEmail ? superEmail : context.pageContext.user.email; //for testing purposes
 
-  const myLocs = await context.spHttpClient.get(restUrl, SPHttpClient.configurations.v1).then(response => response.json());
-  const myLocsNum : [] = myLocs.value[0].MMHubLocationNos.split(";");
+  const schoolsRestUrl = `/sites/contentTypeHub/_api/web/Lists/GetByTitle('schools')/items?$select=Title,School_x0020_Name&$filter=SuperintendentEmail eq '${currUserEmail}'`;
+  const schoolsResponse : any = await context.spHttpClient.get(schoolsRestUrl, SPHttpClient.configurations.v1).then(r => r.json());
+  const areasDpd = schoolsResponse.value.map(i => { return {key: i.Title, text: `${i.School_x0020_Name} (${i.Title})`};});
+  const myAreasLocsNum : [] = schoolsResponse.value.map ( i => i.Title);
 
-  return myLocsNum;
-};
-export const getMyLocsDpd = async (context: WebPartContext) =>{
-  const myLocsNos = await getMyLocations(context).then(r=>r);
-  const myLocsDpd = [];
-  
-  for(let myLocNo of myLocsNos){
-    const myLocDpd = await getMyLocationsInfo(context, myLocNo);//.then(r=>r);
-    myLocsDpd.push(myLocDpd);
-  }
-
-  return Promise.all(myLocsDpd);
+  return [areasDpd, myAreasLocsNum];
 };
 
 const getListItems = async (context: WebPartContext, listUrl: string, listName: string, listDisplayName: string, pageSize: number, locNo: string) =>{
   
   const listData: any = [];
-  //const currUserEmail = context.pageContext.user.email;
-
   const responseUrl = `${listUrl}/_api/web/Lists/GetByTitle('${listName}')/items?$top=${pageSize}&$filter=substringof('${locNo}', LocationNo)`;
   const response = await context.spHttpClient.get(responseUrl, SPHttpClient.configurations.v1); //.then(r => r.json());
 
@@ -121,11 +100,10 @@ const getListItems = async (context: WebPartContext, listUrl: string, listName: 
       });
     }
   }
-
   return listData;
 };
 
-export const readAllLists = async (context: WebPartContext, listUrl: string, listName: string, pageSize: number) =>{
+export const readAllLists = async (context: WebPartContext, listUrl: string, listName: string, pageSize: number, myLocs: []) =>{
   const listData: any = [];
   let aggregatedListsPromises : any = [];
   const responseUrl = `${listUrl}/_api/web/Lists/GetByTitle('${listName}')/items`;
@@ -139,7 +117,7 @@ export const readAllLists = async (context: WebPartContext, listUrl: string, lis
     });
   });
 
-  const myLocs = await getMyLocations(context).then(r => r);
+  //const myLocs = await getMyLocations(context).then(r => r);
   for (let myLoc of myLocs){
     listData.map((listItem: any)=>{
       aggregatedListsPromises = aggregatedListsPromises.concat(getListItems(context, listItem.listUrl, listItem.listName, listItem.listDisplayName, pageSize, myLoc));
@@ -156,7 +134,6 @@ export const isObjectEmpty = (items: any): boolean=>{
   }
   return isEmpty;
 };
-
 export const uniq = (arr: any) => {
   const prims = {"boolean":{}, "number":{}, "string":{}}, objs = [];
 
@@ -168,8 +145,6 @@ export const uniq = (arr: any) => {
           return objs.indexOf(item) >= 0 ? false : objs.push(item);
   });
 };
-
-
 export const arrayUnique = (arr, uniqueKey) => {
   const flagList = [];
   return arr.filter(function(item) {

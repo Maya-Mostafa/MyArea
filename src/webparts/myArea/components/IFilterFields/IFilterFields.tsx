@@ -88,7 +88,7 @@ export default function IFilterFields (props: IFilterFieldsProps) {
                             <Icon className={styles.comboIcon} iconName="Location" />
                             <ComboBox
                                 className={styles.comboStyle}
-                                placeholder="All locations for me"
+                                placeholder="All locations for my area"
                                 options={props.formLocationNosOptions} 
                                 onChange={props.onChangeFilterField("locationNo")}
                                 selectedKey={props.filterField.locationNo.key}                            
