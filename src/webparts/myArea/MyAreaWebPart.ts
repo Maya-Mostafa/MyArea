@@ -16,6 +16,7 @@ export interface IMyAreaWebPartProps {
   listUrl: string;
   listName: string;
   pageSize: number;
+  superEmail: string;
 }
 
 export default class MyAreaWebPart extends BaseClientSideWebPart<IMyAreaWebPartProps> {
@@ -28,7 +29,8 @@ export default class MyAreaWebPart extends BaseClientSideWebPart<IMyAreaWebPartP
         wpTitle: this.properties.wpTitle,
         listUrl: this.properties.listUrl,
         listName: this.properties.listName,
-        pageSize: this.properties.pageSize
+        pageSize: this.properties.pageSize,
+        superEmail: this.properties.superEmail
       }
     );
 
@@ -69,6 +71,10 @@ export default class MyAreaWebPart extends BaseClientSideWebPart<IMyAreaWebPartP
                 PropertyPaneTextField('pageSize', {
                   label: 'Number of Items',
                   value: this.properties.pageSize.toString()
+                }),
+                PropertyPaneTextField('superEmail', {
+                  label: 'Superintendent Email (for testing purposes only)',
+                  value: this.properties.superEmail
                 })
               ]
             }

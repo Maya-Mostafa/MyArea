@@ -6,4 +6,5 @@ export interface IMyAreaProps {
   listUrl: string;
   listName: string;
   pageSize: number;
+  superEmail: string;
 }
