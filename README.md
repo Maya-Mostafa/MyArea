@@ -1,4 +1,4 @@
-# my-area
+# myArea
 
 ## Summary
 
