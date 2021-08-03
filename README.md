@@ -2,9 +2,12 @@
 
 ## Summary
 
-Short summary on functionality and used technologies.
+- MyArea web part displays forms listed in the [Links list](https://pdsb1.sharepoint.com/Forms/MyArea/Lists/Links/AllItems.aspx) based on the current user area location(s) which are retrieved from the [Schools list](https://pdsb1.sharepoint.com/sites/contentTypeHub/Lists/schools/AllItems.aspx) in content-type Hub. Filtering is done by the "SuperintendentEmail" column.
+- Items are grouped by "deptGrp" and "subDeptGrp".
+- Filtering is done through the search box at the top. User can search by: Form title, Employee Name, All Locations for me, Form details and Status.
 
-[picture of the solution in action, if possible]
+![alt MyArea](https://github.com/Maya-Mostafa/MyTasks/blob/master/MyArea1.png)
+![alt MyArea WP Properties](https://github.com/Maya-Mostafa/MyTasks/blob/master/MyArea2.png)
 
 ## Used SharePoint Framework Version
 
@@ -15,24 +18,9 @@ Short summary on functionality and used technologies.
 - [SharePoint Framework](https://aka.ms/spfx)
 - [Microsoft 365 tenant](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tenant)
 
-> Get your own free development tenant by subscribing to [Microsoft 365 developer program](http://aka.ms/o365devprogram)
-
 ## Prerequisites
 
 > Any special pre-requisites?
-
-## Solution
-
-Solution|Author(s)
---------|---------
-folder name | Author details (name, company, twitter alias with link)
-
-## Version history
-
-Version|Date|Comments
--------|----|--------
-1.1|March 10, 2021|Update comment
-1.0|January 29, 2021|Initial release
 
 ## Disclaimer
 
@@ -52,22 +40,17 @@ Version|Date|Comments
 
 ## Features
 
-Description of the extension that expands upon high-level summary above.
+- Reading from a source list
+- Filtering by name and date
+- sorting provided for name and date
+- grouping by list name
 
-This extension illustrates the following concepts:
 
-- topic 1
-- topic 2
-- topic 3
 
-> Notice that better pictures and documentation will increase the sample usage and the value you are providing for others. Thanks for your submissions advance.
+## Libraries
 
-> Share your web part with others through Microsoft 365 Patterns and Practices program to get visibility and exposure. More details on the community, open-source projects and other activities from http://aka.ms/m365pnp.
-
-## References
-
-- [Getting started with SharePoint Framework](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tenant)
-- [Building for Microsoft teams](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/build-for-teams-overview)
-- [Use Microsoft Graph in your solution](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/using-microsoft-graph-apis)
-- [Publish SharePoint Framework applications to the Marketplace](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/publish-to-marketplace-overview)
-- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp) - Guidance, tooling, samples and open-source controls for your Microsoft 365 development
+`npm i @pnp/sp`
+`npm install @pnp/spfx-controls-react --save --save-exact` <br/>
+`npm install moment` <br/>
+`npm install @fluentui/react` <br/>
+`npm install @fluentui/react-hooks`
