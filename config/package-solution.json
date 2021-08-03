@@ -1,0 +1,21 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "my-area-client-side-solution",
+    "id": "85bb2381-4290-482a-862e-c84fca369bd1",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": ""
+    }
+  },
+  "paths": {
+    "zippedPackage": "solution/my-area.sppkg"
+  }
+}
