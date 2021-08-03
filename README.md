@@ -6,8 +6,8 @@
 - Items are grouped by "deptGrp" and "subDeptGrp".
 - Filtering is done through the search box at the top. User can search by: Form title, Employee Name, All Locations for me, Form details and Status.
 
-![alt MyArea](https://github.com/Maya-Mostafa/MyTasks/blob/master/MyArea1.png)
-![alt MyArea WP Properties](https://github.com/Maya-Mostafa/MyTasks/blob/master/MyArea2.png)
+![alt MyArea](https://github.com/Maya-Mostafa/MyArea/blob/master/myArea1.png)
+![alt MyArea WP Properties](https://github.com/Maya-Mostafa/MyArea/blob/master/myArea2.png)
 
 ## Used SharePoint Framework Version
 
