@@ -7,4 +7,13 @@ export interface IMyAreaProps {
   listName: string;
   pageSize: number;
   superEmail: string;
+
+  showHelp: boolean;
+  helpLink: string;
+  helpTitle: string;
+
+  showHelpMsg: boolean;
+  helpMsgTxt: string;
+  helpMsgLink: string;
+  helpMsgLinkTxt: string;
 }

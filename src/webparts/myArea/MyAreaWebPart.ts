@@ -3,7 +3,8 @@ import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
-  PropertyPaneTextField
+  PropertyPaneTextField,
+  PropertyPaneCheckbox
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 
@@ -17,6 +18,13 @@ export interface IMyAreaWebPartProps {
   listName: string;
   pageSize: number;
   superEmail: string;
+  showHelp: boolean;
+  helpLink: string;
+  helpTitle: string;
+  showHelpMsg: boolean;
+  helpMsgTxt: string;
+  helpMsgLink: string;
+  helpMsgLinkTxt: string;
 }
 
 export default class MyAreaWebPart extends BaseClientSideWebPart<IMyAreaWebPartProps> {
@@ -30,7 +38,14 @@ export default class MyAreaWebPart extends BaseClientSideWebPart<IMyAreaWebPartP
         listUrl: this.properties.listUrl,
         listName: this.properties.listName,
         pageSize: this.properties.pageSize,
-        superEmail: this.properties.superEmail
+        superEmail: this.properties.superEmail,
+        helpLink: this.properties.helpLink,
+        helpTitle: this.properties.helpTitle,
+        showHelp: this.properties.showHelp,
+        showHelpMsg: this.properties.showHelpMsg,
+        helpMsgTxt: this.properties.helpMsgTxt,
+        helpMsgLink: this.properties.helpMsgLink,
+        helpMsgLinkTxt: this.properties.helpMsgLinkTxt
       }
     );
 
@@ -77,7 +92,45 @@ export default class MyAreaWebPart extends BaseClientSideWebPart<IMyAreaWebPartP
                   value: this.properties.superEmail
                 })
               ]
-            }
+            },
+            {
+              groupName: "Help Icon",
+              groupFields: [
+                PropertyPaneCheckbox('showHelp', {
+                  text: "Show help icon",
+                  checked: this.properties.showHelp
+                }),
+                PropertyPaneTextField('helpTitle', {
+                  label: 'Link Text',
+                  value: this.properties.helpTitle
+                }),
+                PropertyPaneTextField('helpLink', {
+                  label: 'Link',
+                  value: this.properties.helpLink
+                }),
+              ]
+            },
+            {
+              groupName: "Help Message",
+              groupFields: [
+                PropertyPaneCheckbox('showHelpMsg', {
+                  text: "Show help message",
+                  checked: this.properties.showHelpMsg
+                }),
+                PropertyPaneTextField('helpMsgTxt', {
+                  label: 'Message Text',
+                  value: this.properties.helpMsgTxt
+                }),
+                PropertyPaneTextField('helpMsgLinkTxt', {
+                  label: 'Link Text',
+                  value: this.properties.helpMsgLinkTxt
+                }),
+                PropertyPaneTextField('helpMsgLink', {
+                  label: 'Link',
+                  value: this.properties.helpMsgLink
+                }),
+              ]
+            },
           ]
         }
       ]

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styles from './MyArea.module.scss';
+import {Icon, initializeIcons, MessageBar, MessageBarType} from '@fluentui/react';
 import { IMyAreaProps } from './IMyAreaProps';
 import {readAllLists, arrayUnique, getMyAreaLocsDpd} from  '../Services/DataRequests';
 import IListItems from '../components/IListItems/IListItems';
@@ -59,22 +60,49 @@ export default function MyArea (props: IMyAreaProps){
   };
 
   return (
-    <div className={ styles.myArea }>
-      <h2>{props.wpTitle}</h2>
-  
-      <IFilterFields 
-        filterField={filterFields} 
-        onChangeFilterField={onChangeFilterField} 
-        resetSrch={resetSrch}
-        formTitlesOptions={formTitles}
-        formLocationNosOptions={formLocationNos}
-      />
+		<div className={styles.myArea}>
+			<h2>{props.wpTitle}</h2>
 
-      <IListItems
-        items = {listItems}
-        preloaderVisible = {preloaderVisible}
-        filterField = {filterFields}
-      />
-    </div>
+			<div className={styles.fieldsAndHelp}>
+				<div className={styles.fieldsSection}>
+            <IFilterFields
+              filterField={filterFields}
+              onChangeFilterField={onChangeFilterField}
+              resetSrch={resetSrch}
+              formTitlesOptions={formTitles}
+              formLocationNosOptions={formLocationNos}
+            />
+					</div>
+          {props.showHelp && (
+						<div className={styles.helpSection}>
+							<a
+								href={props.helpLink}
+								title={props.helpTitle}
+								target='_blank'
+								data-interception='off'
+							>
+								<Icon iconName='StatusCircleQuestionMark' />
+							</a>
+						</div>
+					)}
+			</div>
+
+			{props.showHelpMsg && (
+				<MessageBar
+					messageBarType={MessageBarType.warning}
+					isMultiline={true}
+					className={styles.helpMsg}
+				>
+					{props.helpMsgTxt}
+					<a href={props.helpMsgLink}>{props.helpMsgLinkTxt}</a>
+				</MessageBar>
+			)}
+
+			<IListItems
+				items={listItems}
+				preloaderVisible={preloaderVisible}
+				filterField={filterFields}
+			/>
+		</div>
   );
 }

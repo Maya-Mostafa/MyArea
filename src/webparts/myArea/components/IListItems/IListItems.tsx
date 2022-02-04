@@ -47,19 +47,19 @@ export default function IListItems (props: IListItemsProps) {
             </div>
         )
     },
-    {
-        name: 'locationNo',
-        displayName: 'Location No',
-        minWidth: 100,
-        maxWidth: 100,
-        sorting: true,
-        isResizable: true,
-        render : (item: any) => (
-        <div>
-            {item.locationNo}
-        </div>
-        )
-    },
+    // {
+    //     name: 'locationNo',
+    //     displayName: 'Location No',
+    //     minWidth: 100,
+    //     maxWidth: 100,
+    //     sorting: true,
+    //     isResizable: true,
+    //     render : (item: any) => (
+    //     <div>
+    //         {item.locationNo}
+    //     </div>
+    //     )
+    // },
     {
         name: 'formDetails',
         displayName: 'Details',
@@ -97,7 +97,7 @@ export default function IListItems (props: IListItemsProps) {
   }));
 
   return(
-    <div>
+    <div className={styles.listViewNoWrap}>
         <ListView
             items={filteredItems}
             viewFields={viewFields}
