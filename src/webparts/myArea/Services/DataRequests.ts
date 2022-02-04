@@ -62,7 +62,7 @@ export const getMyAreaLocsDpd = async (context: WebPartContext, superEmail: stri
   //const currUserEmail = 'nina.jaiswal@peelsb.com'; //for testing purposes
   const currUserEmail = superEmail ? superEmail : context.pageContext.user.email; //for testing purposes
 
-  const schoolsRestUrl = `/sites/contentTypeHub/_api/web/Lists/GetByTitle('schools')/items?$select=Title,School_x0020_Name&$filter=SuperintendentEmail eq '${currUserEmail}'`;
+  const schoolsRestUrl = `/sites/contentTypeHub/_api/web/Lists/GetByTitle('schools')/items?$orderby=Created desc&$select=Title,School_x0020_Name&$filter=SuperintendentEmail eq '${currUserEmail}'`;
   const schoolsResponse : any = await context.spHttpClient.get(schoolsRestUrl, SPHttpClient.configurations.v1).then(r => r.json());
   const areasDpd = schoolsResponse.value.map(i => { return {key: i.Title, text: `${i.School_x0020_Name} (${i.Title})`};});
   const myAreasLocsNum : [] = schoolsResponse.value.map ( i => i.Title);
