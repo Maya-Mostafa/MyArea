@@ -116,7 +116,7 @@ export default function IFilterFields (props: IFilterFieldsProps) {
                             iconProps={{iconName: 'StackedLineChart'}}
                         /> */}
                         <SearchBox 
-                            placeholder="Employee Name" 
+                            placeholder="Name" 
                             value={props.filterField.fullName}
                             onChange={props.onChangeFilterField("fullName")}
                             iconProps={{ iconName: 'Contact' }}
@@ -125,7 +125,7 @@ export default function IFilterFields (props: IFilterFieldsProps) {
                             className={styles.srchBox}
                         />
                         <SearchBox 
-                            placeholder="Form Details" 
+                            placeholder="Details" 
                             value={props.filterField.formDetails}
                             onChange={props.onChangeFilterField("formDetails")}
                             iconProps={{ iconName: 'GlobalNavButton' }}
