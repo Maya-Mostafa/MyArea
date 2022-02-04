@@ -3,8 +3,8 @@
     "isCreatingSolution": true,
     "environment": "spo",
     "version": "1.12.1",
-    "libraryName": "my-area",
-    "libraryId": "85bb2381-4290-482a-862e-c84fca369bd1",
+    "libraryName": "my-area-db",
+    "libraryId": "9510153b-d3f0-4901-8708-33a5be94a972",
     "packageManager": "npm",
     "isDomainIsolated": false,
     "componentType": "webpart"

@@ -1,8 +1,8 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "my-area-client-side-solution",
-    "id": "85bb2381-4290-482a-862e-c84fca369bd1",
+    "name": "my-area-db",
+    "id": "9510153b-d3f0-4901-8708-33a5be94a972",
     "version": "1.0.0.0",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
@@ -16,6 +16,6 @@
     }
   },
   "paths": {
-    "zippedPackage": "solution/my-area.sppkg"
+    "zippedPackage": "solution/my-area-db.sppkg"
   }
 }
