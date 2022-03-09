@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
-  "id": "9510153b-d3f0-4901-8708-33a5be94a972",
+  "id": "cc9b3c81-66fe-4c13-b276-c01f6f3ca96b",
   "alias": "MyAreaDBWebPart",
   "componentType": "WebPart",
 
@@ -15,7 +15,7 @@
   "supportedHosts": ["SharePointWebPart"],
 
   "preconfiguredEntries": [{
-    "groupId": "9510153b-d3f0-4901-8708-33a5be94a972", // Other
+    "groupId": "cc9b3c81-66fe-4c13-b276-c01f6f3ca96b", // Other
     "group": { "default": "Other" },
     "title": { "default": "MyAreaDB" },
     "description": { "default": "MyArea DB description" },
