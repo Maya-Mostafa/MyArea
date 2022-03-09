@@ -3,6 +3,8 @@ import {IListItemsProps} from './IListItemsProps';
 import styles from '../MyArea.module.scss';
 import {MessageBar, MessageBarType, Spinner} from '@fluentui/react';
 import { ListView, IViewField, GroupOrder, IGrouping } from "@pnp/spfx-controls-react/lib/ListView";
+import * as moment from 'moment';
+
 
 export default function IListItems (props: IListItemsProps) {
   
@@ -44,6 +46,18 @@ export default function IListItems (props: IListItemsProps) {
         render : (item: any) => (
             <div>
                 <div>{item.fullName}</div>
+            </div>
+        )
+    },
+    {
+        name: 'created',
+        displayName: 'Created',
+        sorting: true,
+        minWidth: 100,
+        maxWidth: 150,
+        render : (item: any) => (
+            <div>
+                {moment(item.created).format('MM/DD/YYYY')}
             </div>
         )
     },

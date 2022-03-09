@@ -95,7 +95,8 @@ const getListItems = async (context: WebPartContext, listUrl: string, listName: 
           listDisplayName: listDisplayName,
           locationNo: item.LocationNo || "",
           locationName: item.LocationNames || "",
-          posGroup: item.POSGroup || ""
+          posGroup: item.POSGroup || "",
+          created: item.Created
         });
       });
     }
