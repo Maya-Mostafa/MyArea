@@ -24,13 +24,10 @@ export default function MyArea (props: IMyAreaProps){
     getMyAreaLocsDpd(props.context, props.superEmail).then(r=>{
       setFormLocationNos(r[0].sort((a, b) => a.text.localeCompare(b.text)));
       readAllLists(props.context, props.listUrl, props.listName, props.pageSize, r[1]).then((res: any) =>{
-        const listItemsForms  : any = [];
-        r.map(i=>{
-          if(i.length > 0){
-            listItemsForms.push({
-              key: i[0].title,
-              text: i[0].title
-            });
+        const listItemsForms = res.flat().map(item => {
+          return {
+            key: item.title,
+            text: item.title
           }
         });
         setFormTitles(arrayUnique(listItemsForms, 'key').sort((a, b) => a.key.localeCompare(b.key)));
