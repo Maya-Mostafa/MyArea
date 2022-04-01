@@ -28,7 +28,7 @@ export default function MyArea (props: IMyAreaProps){
           return {
             key: item.title,
             text: item.title
-          }
+          };
         });
         setFormTitles(arrayUnique(listItemsForms, 'key').sort((a, b) => a.key.localeCompare(b.key)));
         setListItems(res.flat());

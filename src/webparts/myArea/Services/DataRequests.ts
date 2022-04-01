@@ -8,11 +8,16 @@ const getImgStatus = (formStatus: string) =>{
       imgStatusName = 'completed.svg';
       imgStatusText = 'Completed';
       break;
+    case 'Collecting_Feedback':
+      imgStatusName = 'collectingFeedback.svg';
+      imgStatusText = 'Collecting Feedback';
+      break;
     case 'Department_Accepted':
       imgStatusName = 'deptAccepted.svg';
       imgStatusText = 'Accepted by the Department';
       break;
     case 'Department_Rejected':
+    case 'Auditor_Rejected':
       imgStatusName = 'deptRejected.svg';
       imgStatusText = 'Rejected by the Department';
       break;
@@ -21,15 +26,32 @@ const getImgStatus = (formStatus: string) =>{
       imgStatusText = 'Accepted by Approver';
       break;
     case 'Approver1_Rejected':
+    case 'Approver_Rejected':
       imgStatusName = 'personRejected.svg';
       imgStatusText = 'Rejected by Approver';
       break;
-    case 'Submitted':
-    case 'Approver1_Inprogress':
-    case 'Superintendent_Inprogress':
-    case 'Department_Inprogress':
+    case 'Employee_Rejected':
+      imgStatusName = 'personRejected.svg';
+      imgStatusText = 'Rejected by Employee';
+      break;
+    case 'Pending_Employee_Approval':
       imgStatusName = 'submitted.svg';
-      imgStatusText = 'In Progress for Approval';
+      imgStatusText = 'Pending Employee Approval';
+      break;
+    case 'Submitted':
+    case 'Pending_Approver_Approval':
+    case 'Approver1_Inprogress':
+      imgStatusName = 'submitted.svg';
+      imgStatusText = 'Pending Approver Approval';
+      break;
+    case 'Superintendent_Inprogress':
+      imgStatusName = 'submitted.svg';
+      imgStatusText = 'Pending Superintendent Approval';
+      break;
+    case 'Department_Inprogress':
+    case 'Pending_Auditor_Approval':
+      imgStatusName = 'submitted.svg';
+      imgStatusText = 'Pending Department Approval';
       break;
     case 'Superintendent_Accepted':
       imgStatusName = 'superAccepted.svg';
@@ -74,11 +96,11 @@ const getListItems = async (context: WebPartContext, listUrl: string, listName: 
   
   const listData: any = [];
   const responseUrl = `${listUrl}/_api/web/Lists/GetByTitle('${listName}')/items?$top=${pageSize}&$filter=substringof('${locNo}', LocationNo)`;
-  const response = await context.spHttpClient.get(responseUrl, SPHttpClient.configurations.v1); //.then(r => r.json());
 
-  if (response.ok){
-    const results = await response.json();
-    if(results){
+  try{
+    const response = await context.spHttpClient.get(responseUrl, SPHttpClient.configurations.v1);
+    if (response.ok){
+      const results = await response.json();
       results.value.map((item: any)=>{
         listData.push({
           id: item.Id,
@@ -99,8 +121,14 @@ const getListItems = async (context: WebPartContext, listUrl: string, listName: 
           created: item.Created
         });
       });
+    }else{
+      console.log("My Area Error: " + listUrl + listName + response.statusText);
+      return [];
     }
+  }catch(error){
+    console.log("My Area Error: " + listUrl + listName + error);
   }
+  
   return listData;
 };
 
@@ -108,21 +136,31 @@ export const readAllLists = async (context: WebPartContext, listUrl: string, lis
   const listData: any = [];
   let aggregatedListsPromises : any = [];
   const responseUrl = `${listUrl}/_api/web/Lists/GetByTitle('${listName}')/items`;
-  const response = await context.spHttpClient.get(responseUrl, SPHttpClient.configurations.v1).then(r => r.json());
 
-  response.value.map((item: any)=>{
-    listData.push({
-      listName: item.Title,
-      listDisplayName: item.ListDisplayName,
-      listUrl: item.ListUrl
-    });
-  });
-
-  //const myLocs = await getMyLocations(context).then(r => r);
-  for (let myLoc of myLocs){
-    listData.map((listItem: any)=>{
-      aggregatedListsPromises = aggregatedListsPromises.concat(getListItems(context, listItem.listUrl, listItem.listName, listItem.listDisplayName, pageSize, myLoc));
-    });
+  try{
+    const response = await context.spHttpClient.get(responseUrl, SPHttpClient.configurations.v1);
+    if (response.ok){
+      const responseResults = await response.json();
+      responseResults.value.map((item: any)=>{
+        listData.push({
+          listName: item.Title,
+          listDisplayName: item.ListDisplayName,
+          listUrl: item.ListUrl
+        });
+      });
+    
+      //const myLocs = await getMyLocations(context).then(r => r);
+      for (let myLoc of myLocs){
+        listData.map((listItem: any)=>{
+          aggregatedListsPromises = aggregatedListsPromises.concat(getListItems(context, listItem.listUrl, listItem.listName, listItem.listDisplayName, pageSize, myLoc));
+        });
+      }
+    }else{
+      console.log("My Area Error: " + listUrl + listName + response.statusText);
+      return [];
+    }
+  }catch(error){
+    console.log("My Area Error: " + listUrl + listName + error);
   }
 
   return Promise.all(aggregatedListsPromises);

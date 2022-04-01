@@ -15,18 +15,21 @@ export default function IFilterFields (props: IFilterFieldsProps) {
     };
 
     const options: IComboBoxOption[] = [
-        { key: 'New', text: 'New' },
-        { key: 'Completed', text: 'Completed' },
-        { key: 'Department_Accepted', text: 'Accepted by the Department' },
-        { key: 'Department_Rejected', text: 'Rejected by the Department' },
         { key: 'Approver1_Accepted', text: 'Accepted by Approver' },
-        { key: 'Approver1_Rejected', text: 'Rejected by Approver' },
-        { key: 'Submitted', text: 'In Progress for Approval' },
+        { key: 'Department_Accepted', text: 'Accepted by the Department' },
         { key: 'Superintendent_Accepted', text: 'Accepted by Superintendent' },
-        { key: 'Superintendent_Rejected', text: 'Rejected by Superintendent' },
+        { key: 'Collecting_Feedback', text: 'Collecting Feedback' },
+        { key: 'Completed', text: 'Completed' },
+        { key: 'Invalid', text: 'Department Invalid' },
+        { key: 'New', text: 'New' },
         { key: 'Other', text: 'Other' },
+        { key: 'Submitted', text: 'Pending Approver Approval' },
+        { key: 'Pending_Employee_Approval', text: 'Pending Employee Approval' },
+        { key: 'Approver1_Rejected', text: 'Rejected by Approver' },
+        { key: 'Department_Rejected', text: 'Rejected by the Department' },
+        { key: 'Employee_Rejected', text: 'Rejected by Employee' },
+        { key: 'Superintendent_Rejected', text: 'Rejected by Superintendent' },
     ];
-
 
     const onRenderOption = (item: IComboBoxOption) => {
         switch (item.key) {
@@ -41,13 +44,19 @@ export default function IFilterFields (props: IFilterFieldsProps) {
             case 'Approver1_Accepted':
                 return <div className={styles.formStatusCol}><img width="20" src={require(`../../formIcons/personAccepted.svg`)} /><span>{item.text}</span></div>;
             case 'Approver1_Rejected':
+            case 'Employee_Rejected':
                 return <div className={styles.formStatusCol}><img width="20" src={require(`../../formIcons/personRejected.svg`)} /><span>{item.text}</span></div>;
             case 'Submitted':
+            case 'Pending_Employee_Approval':
                 return <div className={styles.formStatusCol}><img width="20" src={require(`../../formIcons/submitted.svg`)} /><span>{item.text}</span></div>;
             case 'Superintendent_Accepted':
                 return <div className={styles.formStatusCol}><img width="20" src={require(`../../formIcons/superAccepted.svg`)} /><span>{item.text}</span></div>;
             case 'Superintendent_Rejected':
                 return <div className={styles.formStatusCol}><img width="20" src={require(`../../formIcons/superRejected.svg`)} /><span>{item.text}</span></div>;
+            case 'Collecting_Feedback':
+                return <div className={styles.formStatusCol}><img width="20" src={require(`../../formIcons/collectingFeedback.svg`)} /><span>{item.text}</span></div>;
+            case 'Invalid':
+                return <div className={styles.formStatusCol}><img width="20" src={require(`../../formIcons/invalid.svg`)} /><span>{item.text}</span></div>;
             case 'Other':
                 return <div className={styles.formStatusCol}><img width="20" src={require(`../../formIcons/other.svg`)} /><span>{item.text}</span></div>;
         }
